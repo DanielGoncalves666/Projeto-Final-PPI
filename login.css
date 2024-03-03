@@ -1,0 +1,46 @@
+#login{
+    max-width: 300px;
+    min-width: 200px;
+
+    margin: 2vh auto 0;
+    
+    display: flex;
+    justify-content: center;
+
+    background-color: white;
+
+    box-shadow: 0 0 10px gray;
+    border-radius: 10px;
+    padding: 5vh;
+
+    color: rgb(58, 58, 58);
+    font-size: 20px;
+}
+
+#login input:focus{
+    box-shadow: 0 0 8px gray;
+}
+
+#login input, button{
+    box-sizing: border-box;
+    display: block;
+
+    width: 100%;
+
+    padding: 0.5rem;
+    margin: 1.5vh 0;
+    border: 0.5px solid gray;
+    outline: none;
+
+    color: black;
+}
+
+/*
+Regra relacionada à adição do Ícone (para que entrar fique centralizado)
+*/
+
+#entrar{
+    display:inline-block;
+    position: relative;
+    transform: translate(0,-45%);
+}
