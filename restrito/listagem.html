@@ -4,10 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./restrito.css">
-    <title>Visualização</title>
+    <title>Listagem</title>
   </head>
   <body>
-    <h1>Visualização</h1>
+    <header>
+      <h1>Listagem</h1>
+    </header>
+
+    <nav>
+      <a href="./cadastro_pacientes.html">Cadastro de Pacientes</a>
+      <a href="./cadastro_funcionarios.html">Cadastro de Funcionários</a>
+      <a href="./listagem.html" id="atual">Listagem de Dados</a>
+    </nav>
+
+    <main id="listagem-container">
+      <div id="listagem-filter-container">
+        <div>
+          <input type="radio" name="dadoTipo" id="funcionarios" value="funcionarios" checked>
+          <label for="funcionarios">Funcionários</label>
+        </div>
+        <div>
+          <input type="radio" name="dadoTipo" id="pacientes" value="pacientes">
+          <label for="pacientes">Pacientes</label>
+        </div>
+        <div>
+          <input type="radio" name="dadoTipo" id="enderecos" value="enderecos">
+          <label for="enderecos">Endereços</label>
+        </div>
+        <div>
+          <input type="radio" name="dadoTipo" id="agendamentos" value="agendamentos">
+          <label for="agendamentos">Agendamentos</label>
+        </div>
+        <div>
+          <input type="radio" name="dadoTipo" id="meusAgendamentos" value="meusAgendamentos">
+          <label for="meusAgendamentos">Meus Agendamentos</label>
+        </div>
+
+        <button type="submit">Filtrar</button>
+      </div>
+
+      <div id="entradas-listagem-container">
+        <div class="entrada-listagem">
+          <!-- Generate a dummy HTML card inside this div -->
+          <p class="entrada-texto">Entrada 1</p>
+          <p class="entrada-texto">Entrada 2</p>
+          <p class="entrada-texto">Entrada 3</p>
+        </div>
+
+        <div class="entrada-listagem">
+          <!-- Generate a dummy HTML card inside this div -->
+          <p class="entrada-texto">Entrada 1</p>
+          <p class="entrada-texto">Entrada 2</p>
+          <p class="entrada-texto">Entrada 3</p>
+        </div>
+      </div>
+    </main>
 
   </body>
 </html>
