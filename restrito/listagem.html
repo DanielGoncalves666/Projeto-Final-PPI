@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- link a js file called listagem.js -->
+    <script src="./listagem.js" defer></script>
     <link rel="stylesheet" href="./restrito.css">
     <title>Listagem</title>
   </head>
@@ -40,22 +42,32 @@
           <label for="meusAgendamentos">Meus Agendamentos</label>
         </div>
 
-        <button type="submit">Filtrar</button>
+        <!-- <button type="submit">Filtrar</button> -->
       </div>
 
       <div id="entradas-listagem-container">
-        <div class="entrada-listagem">
-          <!-- Generate a dummy HTML card inside this div -->
-          <p class="entrada-texto">Entrada 1</p>
-          <p class="entrada-texto">Entrada 2</p>
-          <p class="entrada-texto">Entrada 3</p>
-        </div>
+        <div class="entrada-listagem hide" id="exemplo-funcionario">
+          <h3>Nome:</h3>
+          <div class="entrada-listagem-grupo">
+            <p>Código:</p>
+            <p>Sexo:</p>
+            <p>Email:</p>
+            <p>Telefone:</p>
+          </div>
 
-        <div class="entrada-listagem">
-          <!-- Generate a dummy HTML card inside this div -->
-          <p class="entrada-texto">Entrada 1</p>
-          <p class="entrada-texto">Entrada 2</p>
-          <p class="entrada-texto">Entrada 3</p>
+          <div class="entrada-listagem-grupo">
+            <p>CEP:</p>
+            <p>Logradouro:</p>
+            <p>Cidade:</p>
+            <p>Estado:</p>
+          </div>
+
+          <div class="entrada-listagem-grupo">
+            <p>Data de Contratação: </p>
+            <p>Salário:</p>
+            <p>Senha Hash:</p>
+            <p>Código:</p>
+          </div>
         </div>
       </div>
     </main>

@@ -65,6 +65,10 @@ main {
     text-align: center;
 }
 
+#listagem-filter-container div:hover {
+    cursor: pointer;
+}
+
 #listagem-filter-container > div:has(input[type="radio"]:checked) {
     /* background-color: yellow; */
     border-bottom: 3px solid #fff;
@@ -73,6 +77,7 @@ main {
 #listagem-filter-container button {
 }
 
+/* Container de entradas das listagens */
 #entradas-listagem-container {
     flex: 1;
 
@@ -83,6 +88,7 @@ main {
     gap: 5px;
 }
 
+/* Card da entrada (representa um registro no BD) */
 .entrada-listagem {
     box-sizing: border-box;
     background-color: #fff;
@@ -91,15 +97,42 @@ main {
     display: flex;
     flex-wrap: wrap;
     flex: 1;
-    min-width: 250px;
 
     justify-content: space-between;
+
+    gap: 5px 10px;
+}
+
+.entrada-listagem p {
+    color: #222;
+    margin: 0;
+}
+
+.entrada-listagem b {
+    color: #222;
+    flex-basis: 100%;
+    margin: 0;
+    font-size: 1.2em;
+}
+
+/* Container interno para conjuntos de dados (em coluna) */
+.entrada-listagem-grupo {
+    background-color: lightgray;
+
+    padding: 5px 10px;    
+
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+@media (max-width: 600px) {
+    .entrada-listagem-grupo {
+        flex-basis: 100%;
+    }
 }
 
 .hide {
     display: none;
 }
 
-.entrada-texto {
-    color: #222;
-}
