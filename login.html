@@ -23,7 +23,7 @@
         <main>
             <div id="login">
                 <h2>Login - Área Restrita</h2>
-                <form action="login.php" method="post">
+                <form id="loginForm" action="login.php" method="post">
                     <div>
                         <label for="usuario">Usuário:</label>
                         <input type="text" id="usuario" name="usuario" required autofocus>
@@ -45,4 +45,13 @@
             <address>Av. João Naves de Ávila, 2121 - Santa Mônica, Uberlândia - MG, 38408-100.</address>
         </footer>
     </body>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+          document.forms.loginForm.addEventListener("submit", event => {
+              event.preventDefault();
+              window.location.replace("./restrito/index.html")
+          })
+      })
+    </script>
 </html>
