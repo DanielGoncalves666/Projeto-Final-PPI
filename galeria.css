@@ -7,6 +7,21 @@
     gap: 4vh 2vw;
 }
 
+.container img{
+    max-width: 30%;
+}
+
+@media (max-width: 600px)
+{
+    .container{
+        margin: 0 4vw;
+    }
+
+    .container img{
+        max-width: 75%;
+    }
+}
+
 .item{
     flex-grow: 1;
     flex-shrink: 1;
@@ -14,3 +29,18 @@
     border-radius: 10px;
     box-shadow: 5px 5px 5px gray;
 }
+
+#galeria{
+    display: flex;
+    flex-direction: column;
+
+    background-color: #aa76ff;
+
+    border-radius: 10px;
+    padding-bottom: 5vh;
+}
+
+#galeria > h2{
+    font-size: 1.8rem;
+}
+

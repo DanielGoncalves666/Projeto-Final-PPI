@@ -6,6 +6,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="form.css">
     </head>
     <body>
         <header>
@@ -19,56 +20,62 @@
             <button><a href="login.html">Login</a></button>
         </nav>
         <main>
-            <h2>Agendar Consulta</h2>
-            <form action="agendar_consulta.php" method="post">
-                <div>
-                    <label for="nome">Nome:</label>
-                    <input type="text" id="nome" name="nome">
-                </div>
-                <div>
-                    <label for="email">E-mail:</label>
-                    <input type="email" id="email" name="email">
-                </div>
-                <div>
-                    <label for="sexo">Sexo:</label>
-                    <select name="sexo" id="sexo">
-                        <option value="">Selecionar</option>
-                        <option value="masculino">Masculino</option>
-                        <option value="feminino">Feminino</option>
-                    </select>
-                </div>
-                
-                <div>
-                    <label for="especialidade">Especialidade:</label>
-                    <select name="especialidade" id="especialidade">
-                        <option value="">Selecionar</option>
-                        <option value="ortopedista">Ortopedista</option>
-                        <option value="ginecologista">Ginecologista</option>
-                        <option value="oftalmologista">Oftalmologista</option>
-                    </select>
-                </div>
+            <div id="cadastro-form">
+                <h2>Agendar Consulta</h2>
+                <form action="agendar_consulta.php" method="post">
+                    <div>
+                        <label for="nome">Nome:</label>
+                        <input type="text" id="nome" name="nome" required>
+                    </div>
+                    <div>
+                        <label for="email">E-mail:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div>
+                        <label for="sexo">Sexo:</label>
+                        <div>
+                            <input type="radio" id="masculino" name="sexo" value="Masculino" checked>
+                            <label for="masculino">Masculino</label>
+                            <input type="radio" id="feminino" name="sexo" value="Feminino">
+                            <label for="feminino">Feminino</label>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="especialidade">Especialidade:</label>
+                        <select name="especialidade" id="especialidade" required>
+                            <option value="">Selecionar</option>
+                            <option value="ortopedista">Ortopedista</option>
+                            <option value="ginecologista">Ginecologista</option>
+                            <option value="oftalmologista">Oftalmologista</option>
+                        </select>
+                    </div>
+    
+                    <div>
+                        <label for="medico">Médico:</label>
+                        <select name="medico" id="medico" required>
+                            <option value="">Selecionar</option>
+                            <option value="teste">Dr. José da Silva</option>
+                        </select>
+                    </div>
+    
+                    <div>
+                        <label for="data">Data:</label>
+                        <input type="date" name="data" id="data" required>
+                    </div>
+    
+                    <div>
+                        <label for="horario">Horário:</label>
+                        <select name="horario" id="horario" required>
+                            <option value="">Selecionar</option>
+                            <option value="1630">16:30</option>
+                        </select>
+                    </div>
+    
+                    <button>Cadastrar</button>
+                </form>
 
-                <div>
-                    <label for="medico">Médico:</label>
-                    <select name="medico" id="medico">
-                        <option value="">Selecionar</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label for="data">Data:</label>
-                    <input type="date" name="data" id="data">
-                </div>
-
-                <div>
-                    <label for="horario">Horário:</label>
-                    <select name="horario" id="horario">
-                        <option value="">Selecionar</option>
-                    </select>
-                </div>
-
-                <button>Cadastrar</button>
-            </form>
+            </div>
         </main>
         <footer>
             <address>Av. João Naves de Ávila, 2121 - Santa Mônica, Uberlândia - MG, 38408-100.</address>

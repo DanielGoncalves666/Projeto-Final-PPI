@@ -3,6 +3,11 @@ body{
     background-color: #9162f4;
 
     overflow-y: scroll;
+
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
 }
 
 header{
@@ -29,6 +34,8 @@ nav{
 
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
+    align-content: center;
 
     position: sticky;
     top: 0;
@@ -46,7 +53,7 @@ nav > button{
 
 nav > button:hover{
     cursor: pointer;
-    color: green;
+    color: blue;
 }
 
 button > a{
@@ -64,13 +71,20 @@ main{
     background-color: #9162f4;
     color: white;
 
-    padding: 10vh 10vw;
+    padding: 5vh 10vw;
     border-radius: 10px;
+}
+
+main h2{
+    align-self: center;
+
+    font-size: 1.5em;
 }
 
 footer{
     background-color: #4525d2;
     color: white;
+    text-align: center;
 
     display: flex;
     justify-content: center;
@@ -79,4 +93,6 @@ footer{
     height: 5vh;
 
     border-radius: 10px;
+
+    margin-top: auto;
 }
