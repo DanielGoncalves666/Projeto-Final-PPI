@@ -77,9 +77,18 @@ nav{
     justify-content: space-around;
     flex-wrap: wrap;
     align-content: center;
+}
 
-    /* position: sticky; */
-    /* top: 0; */
+@media (max-width: 600px){
+    nav{
+        padding: 1vh 4vw;
+    }
+}
+
+@media (min-width:601px) and (max-width: 800px){
+    nav{
+        padding: 2vh 8vw;
+    }
 }
 
 nav > a{
@@ -88,6 +97,8 @@ nav > a{
 
     background-color: inherit;
     color: white;
+
+    text-align: center;
 
     padding: 2vh 1vh;
 }
