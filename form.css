@@ -13,6 +13,10 @@
     flex-direction: column;
 }
 
+#cadastro-form > h2 {
+    margin-top: 0;
+}
+
 #cadastro-form > form{
     display: flex;
     flex-direction: column;
