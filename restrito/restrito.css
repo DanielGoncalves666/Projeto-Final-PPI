@@ -23,8 +23,9 @@
     align-items: center;
     align-content: stretch;
     justify-content: space-between;
+    */
 
-    gap: 10px; */
+    gap: 10px;
 }
 
 #listagem-filter-container > div {
