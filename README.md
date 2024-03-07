@@ -2,7 +2,7 @@
 
 Nomes:
 - Mateus Carmo de Oliveira (11911BCC026)
-- Daniel
+- Daniel Gonçalves (12011BCC011)
 
 Estrutura dos arquivos:
 (páginas públicas)
