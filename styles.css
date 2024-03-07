@@ -79,18 +79,6 @@ nav{
     align-content: center;
 }
 
-@media (max-width: 600px){
-    nav{
-        padding: 1vh 4vw;
-    }
-}
-
-@media (min-width:601px) and (max-width: 800px){
-    nav{
-        padding: 2vh 8vw;
-    }
-}
-
 nav > a{
     outline: none;
     border: none;
@@ -151,4 +139,24 @@ footer{
     border-radius: 10px;
 
     margin-top: auto;
+}
+
+@media (max-width: 600px){
+    nav{
+        padding: 1vh 4vw;
+    }
+
+    nav > a{
+        padding: 0.5vh 0.5vw;
+    } 
+
+    footer{
+        height: 8vh;
+    }
+}
+
+@media (min-width:601px) and (max-width: 800px){
+    nav{
+        padding: 2vh 8vw;
+    }
 }

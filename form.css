@@ -25,16 +25,37 @@
 #cadastro-form div {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
 
     padding: 5px 0;
     margin: 5px 0;
 }
 
+#cadastro-form input{
+    border-radius: 5px;
+    width: auto;
+}
+
+.longInput{
+    flex-grow: 1;
+}
+
+#cadastro-form div > label{
+    padding-right: 2vw;
+}
+
+
 #cadastro-form button {
     width: 50%;
     font-size: 1.2rem;
 
+    border-radius: 5px;
+
     align-self: center;
 }
 
+@media (width > 500px){
+    #cadastro-form{
+        padding: 2vh 5vh;
+    }
+}

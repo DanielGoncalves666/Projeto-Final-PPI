@@ -27,6 +27,10 @@
 }
 
 #login :is(input,button){
+    border-radius: 5px;
+}
+
+#login :is(input,button){
     box-sizing: border-box;
     display: block;
 
