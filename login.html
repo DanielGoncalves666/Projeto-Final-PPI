@@ -39,7 +39,7 @@
                         <span id="entrar">Entrar</span>
                     </button></p>
 
-                    <div id="loginError">Dados Incorretos! Por favor tente novamente.</div>
+                    <div id="loginError"></div>
                 </form>
             </div>
         </main>
@@ -51,30 +51,35 @@
     <script>
         async function tryLogin(form)
         {
+            const loginError = document.getElementById("loginError");
+
             try{
                 const options = {method:"post",
                                  body: new FormData(form)};
 
                 const response = await fetch("login.php", options);
                 if(! response.ok)
+                {
                     throw new Error(response.statusText);
+                }
 
                 let result = await response.json();
 
                 if(result.success)
                 {
-                    document.getElementById("loginError").style.display = "none";
-                    window.location = result.detail;
+                    loginError.textContent = "";
+                    window.open(result.detail, "__blank");
                 }
                 else
                 {
-                    document.getElementById("loginError").style.display = "block";
+                    loginError.textContent = "Dados Incorretos! Por favor tente novamente.";
                     form.senha.value = "";
                     form.senha.focus();
                 }
             }
             catch(e)
             {
+                loginError.textContent = "Problemas de conexão com o servidor.";
                 console.log("Erro: " + e);
             }
         }

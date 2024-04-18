@@ -1,10 +1,18 @@
+<?php
+  require "../conexaoMySQL.php";
+  require "session_verification.php";  
+  
+  session_start();
+  exitWhenNotLoggedIn();
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./restrito.css">
-    <title>Cadastro de Funcionários</title>
+    <title>Cadastro de Pacientes</title>
   </head>
   <body>
     <header>
@@ -12,17 +20,17 @@
     </header>
 
     <nav>
-      <a href="index.html">Home</a>
-      <a href="cadastro_pacientes.html">Cadastro de Pacientes</a>
-      <a href="cadastro_funcionarios.html" id="atual">Cadastro de Funcionários</a>
-      <a href="listagem.html">Listagem de Dados</a>
-      <a href="../login.html">Sair</a>
+      <a href="index.php">Home</a>
+      <a href="cadastro_pacientes.php" id="atual">Cadastro de Pacientes</a>
+      <a href="cadastro_funcionarios.php">Cadastro de Funcionários</a>
+      <a href="listagem.php">Listagem de Dados</a>
+      <a href="logout.php">Sair</a>
     </nav>
 
     <main>
       <div id="cadastro-form">
-        <h2>Cadastrar Novo Funcionário</h2>
-        <form action="cadastrar_funcionario.php" method="post">
+        <h2>Cadastrar Novo Paciente</h2>
+        <form action="cadastrar_paciente.php" method="post">
           <div>
             <label for="nome">Nome:</label>
             <input type="text" id="nome" name="nome" required class="longInput">
@@ -40,7 +48,7 @@
   
           <div>
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required class="longInput">
+            <input type="text" id="email" name="email" required class="longInput">
           </div>
   
           <div>
@@ -54,8 +62,8 @@
           </div>
   
           <div>
-            <label for="rua">Logradouro:</label>
-            <input type="text" id="rua" name="rua" required class="longInput">
+            <label for="logradouro">Logradouro:</label>
+            <input type="text" id="logradouro" name="logradouro" required class="longInput">
           </div>
   
           <div>
@@ -65,7 +73,7 @@
   
           <div>
             <label for="estado">Estado:</label>
-            <select id="estado" name="estado">
+            <select id="estado" name="estado" required>
               <option value="">Selecione</option>
               <option value="AC">AC</option>
               <option value="AL">AL</option>
@@ -98,38 +106,32 @@
           </div>
   
           <div>
-            <label for="dataContrato">Data de Contrato:</label>
-            <input type="date" id="dataContrato" name="dataContrato">
+            <label for="peso">Peso:</label>
+            <input type="number" step="any" id="peso" name="peso" required>
           </div>
   
           <div>
-            <label for="salario">Salário:</label>
-            <input type="number" id="salario" name="salario">
+            <label for="altura">Altura:</label>
+            <input type="number" step="any" id="altura" name="altura" required>
           </div>
   
-          <div>
-            <label for="senha">Senha:</label>
-            <input type="password" id="senha" name="senha">
-          </div>
-  
-          <div>
-            <label for="medico">Medico:</label>
-            <input type="checkbox" id="medico" name="medico">
-          </div>
-  
-          <div>      
-            <label for="especialidade">Especialidade:</label>
-            <input type="text" id="especialidade" name="especialidade">
-          </div>
-  
-          <div>
-            <label for="crm">CRM:</label>
-            <input type="text" id="crm" name="crm" pattern="[0-9]{6}/[A-Z]{2}">
+          <div> 
+            <label for="tiposangue">Tipo Sanguíneo:</label>
+            <select id="tiposangue" name="tiposangue" required>
+              <option value="">Selecione</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
           </div>
   
           <button type="submit">Cadastrar</button>
         </form>
-
       </div>
     </main>
     <footer>

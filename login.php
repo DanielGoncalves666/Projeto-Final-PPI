@@ -42,7 +42,6 @@
         }
     }
 
-    
     $pdo = mySQLConnect();
 
     $email = $_POST["email"] ?? "";
@@ -50,7 +49,17 @@
 
     if(checkLogin($pdo,$email,$senha))
     {
-        $response = new RequestResponse(true, "./restrito/index.html");
+        $cookie_params = session_get_cookie_params(); // recupera os parâmetros da sessão
+        $cookieParams['httponly'] = true; // impedi acesso ao cookie por meio de javascript
+    
+        // redefine os parâmetros de sessão como sendo os presentes em $cookie_params
+        session_set_cookie_params($cookieParams);
+
+        session_start();
+        $_SESSION['loggedIn'] = true;
+        $_SESSION['user'] = $email;
+
+        $response = new RequestResponse(true, "restrito/index.php");
     }
     else
     {

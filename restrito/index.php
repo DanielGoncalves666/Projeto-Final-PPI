@@ -1,3 +1,10 @@
+<?php
+    require "session_verification.php";  
+    
+    session_start();
+    exitWhenNotLoggedIn();
+?>
+
 <!DOCTYPE html>
 <html lang="pt_BR">
     <head>
@@ -9,18 +16,17 @@
     </head>
     <body>
         <header>
-            <!-- <img src="imagens/logo-placeholder.jpg" alt="MedComp logo" height="50" width="50"> -->
             <h1>Clínica MedComp</h1>
         </header>
         <nav>
-          <a href="index.html" id="atual">Home</a>
-          <a href="cadastro_pacientes.html">Cadastro de Pacientes</a>
-          <a href="cadastro_funcionarios.html">Cadastro de Funcionários</a>
-          <a href="listagem.html">Listagem de Dados</a>
-          <a href="../login.html">Sair</a>
+          <a href="index.php" id="atual">Home</a>
+          <a href="cadastro_pacientes.php">Cadastro de Pacientes</a>
+          <a href="cadastro_funcionarios.php">Cadastro de Funcionários</a>
+          <a href="listagem.php">Listagem de Dados</a>
+          <a href="logout.php">Sair</a>
         </nav>
         <main>
-            <h2>Seja Bem-Vindo, NOME_FUNCIONÁRIO!</h2>
+            <h2>Seja Bem-Vindo, <?php echo $_SESSION['user'] ?>.</h2>
         </main>
         <footer>
             <address>Av. João Naves de Ávila, 2121 - Santa Mônica, Uberlândia - MG, 38408-100.</address>

@@ -1,3 +1,11 @@
+<?php
+  require "../conexaoMySQL.php";
+  require "session_verification.php";  
+    
+    session_start();
+    exitWhenNotLoggedIn();
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -14,11 +22,11 @@
     </header>
 
     <nav>
-      <a href="index.html">Home</a>
-      <a href="cadastro_pacientes.html">Cadastro de Pacientes</a>
-      <a href="cadastro_funcionarios.html">Cadastro de Funcionários</a>
-      <a href="listagem.html" id="atual">Listagem de Dados</a>
-      <a href="../login.html">Sair</a>
+      <a href="index.php">Home</a>
+      <a href="cadastro_pacientes.php">Cadastro de Pacientes</a>
+      <a href="cadastro_funcionarios.php">Cadastro de Funcionários</a>
+      <a href="listagem.php" id="atual">Listagem de Dados</a>
+      <a href="logout.php">Sair</a>
     </nav>
 
     <main id="listagem-container">
