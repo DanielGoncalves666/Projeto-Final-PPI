@@ -57,6 +57,36 @@
           </div>
   
           <div>
+            <label for="dataContrato">Data de Contrato:</label>
+            <input type="date" id="dataContrato" name="dataContrato">
+          </div>
+  
+          <div>
+            <label for="salario">Salário:</label>
+            <input type="number" id="salario" name="salario">
+          </div>
+  
+          <div>
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha">
+          </div>
+  
+          <div>
+            <label for="medico">Medico:</label>
+            <input type="checkbox" id="medico" name="medico">
+          </div>
+  
+          <div>      
+            <label for="especialidade">Especialidade:</label>
+            <input type="text" id="especialidade" name="especialidade">
+          </div>
+  
+          <div>
+            <label for="crm">CRM:</label>
+            <input type="text" id="crm" name="crm" pattern="[0-9]{6}/[A-Z]{2}">
+          </div>
+  
+          <div>
             <label for="cep">CEP:</label>
             <input type="text" id="cep" name="cep" required>
           </div>
@@ -105,36 +135,6 @@
             </select>
           </div>
   
-          <div>
-            <label for="dataContrato">Data de Contrato:</label>
-            <input type="date" id="dataContrato" name="dataContrato">
-          </div>
-  
-          <div>
-            <label for="salario">Salário:</label>
-            <input type="number" id="salario" name="salario">
-          </div>
-  
-          <div>
-            <label for="senha">Senha:</label>
-            <input type="password" id="senha" name="senha">
-          </div>
-  
-          <div>
-            <label for="medico">Medico:</label>
-            <input type="checkbox" id="medico" name="medico">
-          </div>
-  
-          <div>      
-            <label for="especialidade">Especialidade:</label>
-            <input type="text" id="especialidade" name="especialidade">
-          </div>
-  
-          <div>
-            <label for="crm">CRM:</label>
-            <input type="text" id="crm" name="crm" pattern="[0-9]{6}/[A-Z]{2}">
-          </div>
-  
           <button type="submit">Cadastrar</button>
         </form>
 
@@ -143,5 +143,31 @@
     <footer>
       <address>Av. João Naves de Ávila, 2121 - Santa Mônica, Uberlândia - MG, 38408-100.</address>
     </footer>
+
+    <script src="./resgate_dados.js"></script>
+    <script>
+      var cepRegex = /^\d{5}-?\d{3}$/;
+      document.addEventListener("DOMContentLoaded", function() {
+          let form = document.querySelector("form");
+          document.getElementById("cep").addEventListener("keyup", function() {
+              let cep = document.getElementById("cep").value;
+              if (cepRegex.test(cep))
+              {
+                  resgatarEndereco(cep)
+                      .then(endereco => {
+                        if (endereco === false) throw new Error("Endereço não existe na base de dados");
+                        form.rua.value = endereco.logradouro;
+                        form.cidade.value = endereco.cidade;
+                        form.estado.value = endereco.estado;
+                      })
+                      .catch(erro => {
+                        form.rua.value    = '';
+                        form.cidade.value = '';
+                        form.estado.value = '';
+                      });
+              }
+          })
+      });
+    </script>
   </body>
 </html>

@@ -55,6 +55,31 @@
             <label for="tel">Telefone:</label>
             <input type="tel" id="tel" name="tel" required>
           </div>
+
+          <div>
+            <label for="peso">Peso:</label>
+            <input type="number" step="any" id="peso" name="peso" required>
+          </div>
+  
+          <div>
+            <label for="altura">Altura:</label>
+            <input type="number" step="any" id="altura" name="altura" required>
+          </div>
+  
+          <div> 
+            <label for="tiposangue">Tipo Sanguíneo:</label>
+            <select id="tiposangue" name="tiposangue" required>
+              <option value="">Selecione</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
+          </div>
   
           <div>
             <label for="cep">CEP:</label>
@@ -62,8 +87,8 @@
           </div>
   
           <div>
-            <label for="logradouro">Logradouro:</label>
-            <input type="text" id="logradouro" name="logradouro" required class="longInput">
+            <label for="rua">Logradouro:</label>
+            <input type="text" id="rua" name="rua" required class="longInput">
           </div>
   
           <div>
@@ -105,31 +130,6 @@
             </select>
           </div>
   
-          <div>
-            <label for="peso">Peso:</label>
-            <input type="number" step="any" id="peso" name="peso" required>
-          </div>
-  
-          <div>
-            <label for="altura">Altura:</label>
-            <input type="number" step="any" id="altura" name="altura" required>
-          </div>
-  
-          <div> 
-            <label for="tiposangue">Tipo Sanguíneo:</label>
-            <select id="tiposangue" name="tiposangue" required>
-              <option value="">Selecione</option>
-              <option value="A+">A+</option>
-              <option value="A-">A-</option>
-              <option value="B+">B+</option>
-              <option value="B-">B-</option>
-              <option value="AB+">AB+</option>
-              <option value="AB-">AB-</option>
-              <option value="O+">O+</option>
-              <option value="O-">O-</option>
-            </select>
-          </div>
-  
           <button type="submit">Cadastrar</button>
         </form>
       </div>
@@ -137,5 +137,31 @@
     <footer>
       <address>Av. João Naves de Ávila, 2121 - Santa Mônica, Uberlândia - MG, 38408-100.</address>
     </footer>
+
+    <script src="./resgate_dados.js"></script>
+    <script>
+      var cepRegex = /^\d{5}-?\d{3}$/;
+      document.addEventListener("DOMContentLoaded", function() {
+          let form = document.querySelector("form");
+          document.getElementById("cep").addEventListener("keyup", function() {
+              let cep = document.getElementById("cep").value;
+              if (cepRegex.test(cep))
+              {
+                  resgatarEndereco(cep)
+                      .then(endereco => {
+                        if (endereco === false) throw new Error("Endereço não existe na base de dados");
+                        form.rua.value = endereco.logradouro;
+                        form.cidade.value = endereco.cidade;
+                        form.estado.value = endereco.estado;
+                      })
+                      .catch(erro => {
+                        form.rua.value    = '';
+                        form.cidade.value = '';
+                        form.estado.value = '';
+                      });
+              }
+          })
+      });
+    </script>
   </body>
 </html>
