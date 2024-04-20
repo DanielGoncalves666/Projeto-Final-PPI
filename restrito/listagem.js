@@ -2,6 +2,93 @@
 // Funções para montar entradas na lista //
 ///////////////////////////////////////////
 
+function addEntradaPaciente(pessoa) {
+    let container_entradas = document.getElementById("entradas-listagem-container");
+    let novaEntrada = document.createElement("div");
+    novaEntrada.classList.add("entrada-listagem");
+
+    let nome = document.createElement("b");
+    nome.textContent = `Nome: ${pessoa.nome}`;
+    novaEntrada.appendChild(nome);
+
+    let grupoDiv = document.createElement("div");
+    grupoDiv.classList.add('entrada-listagem-grupo');
+    for (dado of ["codigo", "sexo", "email", "telefone"])
+    {
+        let p = document.createElement("p");
+        p.textContent = `${dado}: ` + pessoa[dado];
+        grupoDiv.appendChild(p);
+    }
+    novaEntrada.appendChild(grupoDiv);
+
+    grupoDiv = document.createElement("div");
+    grupoDiv.classList.add('entrada-listagem-grupo');
+    for (dado of ["cep", "logradouro", "cidade", "estado"])
+    {
+        let p = document.createElement("p");
+        p.textContent = `${dado}: ` + pessoa[dado];
+        grupoDiv.appendChild(p);
+    }
+    novaEntrada.appendChild(grupoDiv);
+
+    grupoDiv = document.createElement("div");
+    grupoDiv.classList.add('entrada-listagem-grupo');
+    for (dado of ["peso", "altura", "tiposanguineo"])
+    {
+        let p = document.createElement("p");
+        p.textContent = `${dado}: ` + pessoa[dado];
+        grupoDiv.appendChild(p);
+    }
+    novaEntrada.appendChild(grupoDiv);
+
+    container_entradas.appendChild(novaEntrada);
+}
+
+function addEntradaFuncionario(pessoa) {
+    let container_entradas = document.getElementById("entradas-listagem-container");
+    let novaEntrada = document.createElement("div");
+    novaEntrada.classList.add("entrada-listagem");
+
+    let nome = document.createElement("b");
+    nome.textContent = `Nome: ${pessoa.especialidade != null ? 'Dr. ' + pessoa.nome : pessoa.nome}`;
+    novaEntrada.appendChild(nome);
+
+    let grupoDiv = document.createElement("div");
+    grupoDiv.classList.add('entrada-listagem-grupo');
+    for (dado of ["codigo", "sexo", "email", "telefone"])
+    {
+        let p = document.createElement("p");
+        p.textContent = `${dado}: ` + pessoa[dado];
+        grupoDiv.appendChild(p);
+    }
+    novaEntrada.appendChild(grupoDiv);
+
+    grupoDiv = document.createElement("div");
+    grupoDiv.classList.add('entrada-listagem-grupo');
+    for (dado of ["cep", "logradouro", "cidade", "estado"])
+    {
+        let p = document.createElement("p");
+        p.textContent = `${dado}: ` + pessoa[dado];
+        grupoDiv.appendChild(p);
+    }
+    novaEntrada.appendChild(grupoDiv);
+
+    grupoDiv = document.createElement("div");
+    grupoDiv.classList.add('entrada-listagem-grupo');
+    for (dado of ["dataContrato", "salario", "especialidade", "crm"])
+    {
+        if (pessoa[dado] == null)
+            continue;
+
+        let p = document.createElement("p");
+        p.textContent = `${dado}: ` + pessoa[dado];
+        grupoDiv.appendChild(p);
+    }
+    novaEntrada.appendChild(grupoDiv);
+
+    container_entradas.appendChild(novaEntrada);
+}
+
 function addEntradaEndereco(endereco) {
     let container_entradas = document.getElementById("entradas-listagem-container");
     let novaEntrada = document.createElement("div");
@@ -35,8 +122,14 @@ function displayFilter(index) {
 
     switch(index) {
     case 0:
+        resgatarFuncionarios()
+            .then(funcionarios => funcionarios.forEach(addEntradaFuncionario))
+            .catch(e => console.error(e));
         break;
     case 1:
+        resgatarPacientes()
+            .then(pacientes => pacientes.forEach(addEntradaPaciente))
+            .catch(e => console.error(e));
         break;
     case 2:
         resgatarEnderecos()

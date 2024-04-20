@@ -23,3 +23,27 @@ async function resgatarEnderecos() {
         return;
     }
 }
+
+async function resgatarFuncionarios() {
+    try {
+        let response = await fetch("get_pessoa.php?tipo=funcionario");
+        if (!response.ok) throw new Error(response.statusText);
+        let funcionarios = await response.json();
+        return funcionarios;
+    }
+    catch (e) {
+        console.error(e);
+    }
+}
+
+async function resgatarPacientes() {
+    try {
+        let response = await fetch("get_pessoa.php?tipo=paciente");
+        if (!response.ok) throw new Error(response.statusText);
+        let pacientes = await response.json();
+        return pacientes;
+    }
+    catch (e) {
+        console.error(e);
+    }
+}
