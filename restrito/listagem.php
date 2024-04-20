@@ -2,8 +2,8 @@
   require "../conexaoMySQL.php";
   require "session_verification.php";  
     
-    session_start();
-    exitWhenNotLoggedIn();
+  session_start();
+  exitWhenNotLoggedIn();
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +30,7 @@
     </nav>
 
     <main id="listagem-container">
-      <div id="listagem-filter-container">
+      <div id="listagem-filter-container" data-codigo="<?php echo $_SESSION['codigo']; ?>" data-medico="<?php echo $_SESSION['medico']; ?>">
         <div>
           <input type="radio" name="dadoTipo" id="funcionarios" value="funcionarios" checked>
           <label for="funcionarios">Funcionários</label>

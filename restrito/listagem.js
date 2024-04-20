@@ -143,6 +143,14 @@ function displayFilter(index) {
     }
 }
 
+const codigo = document.getElementById("listagem-filter-container").getAttribute('data-codigo');
+const medico = document.getElementById("listagem-filter-container").getAttribute('data-medico') === "true";
+
+if (medico === false)
+{
+    document.getElementById("meusAgendamentos").parentNode.style.display = "none";
+}
+
 let radioInputs = document.querySelectorAll('input[name="dadoTipo"]');
 
 for (const radioInput of radioInputs) {

@@ -13,20 +13,38 @@
         }
     }
 
+    $codigo = '';
+    $medico = false;
     function checkLogin($pdo, $email, $senha)
     {
         $sql = <<<SQL
-            SELECT funcionario.senhaHash
-            FROM pessoa INNER JOIN funcionario
+            SELECT funcionario.senhaHash, pessoa.codigo
+            FROM pessoa
+            INNER JOIN funcionario
             ON pessoa.codigo = funcionario.codigo
             WHERE email = ?
         SQL;
+
+        $sqlCheckMedico = <<<SQL
+        SELECT * FROM medico WHERE codigo = ?
+        SQL;
+
+        global $codigo, $medico;
 
         try{
             $stmt = $pdo->prepare($sql);
             $stmt->execute([$email]);
 
-            $hashSenha = $stmt->fetchColumn();
+            $row = $stmt->fetch(PDO::FETCH_NUM);
+            $hashSenha = $row[0];
+            $codigo = $row[1];
+
+            $stmtCheck = $pdo->prepare($sqlCheckMedico);
+            $stmtCheck->execute([$codigo]);
+
+            if ($stmtCheck->rowCount() > 0) {
+                $medico = true;
+            }
 
             if(!$hashSenha)
             {
@@ -50,14 +68,17 @@
     if(checkLogin($pdo,$email,$senha))
     {
         $cookie_params = session_get_cookie_params(); // recupera os parâmetros da sessão
-        $cookieParams['httponly'] = true; // impedi acesso ao cookie por meio de javascript
+        $cookieParams['httponly'] = true; // impede acesso ao cookie por meio de javascript
     
         // redefine os parâmetros de sessão como sendo os presentes em $cookie_params
         session_set_cookie_params($cookieParams);
 
         session_start();
+        
         $_SESSION['loggedIn'] = true;
         $_SESSION['user'] = $email;
+        $_SESSION['codigo'] = $codigo;
+        $_SESSION['medico'] = $medico ? "true" : "false";
 
         $response = new RequestResponse(true, "restrito/index.php");
     }
