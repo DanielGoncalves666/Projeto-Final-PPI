@@ -11,7 +11,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- link a js file called listagem.js -->
+    <script src="./resgate_dados.js" defer></script>
     <script src="./listagem.js" defer></script>
     <link rel="stylesheet" href="./restrito.css">
     <title>Listagem</title>
