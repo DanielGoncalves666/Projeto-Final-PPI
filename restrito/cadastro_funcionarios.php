@@ -30,7 +30,8 @@
     <main>
       <div id="cadastro-form">
         <h2>Cadastrar Novo Funcionário</h2>
-        <form action="cadastrar_funcionario.php" method="post">
+        <form action="cadastro_sql.php" method="post">
+          <input type="hidden" name="tipo" value="funcionario">
           <div>
             <label for="nome">Nome:</label>
             <input type="text" id="nome" name="nome" required class="longInput">
@@ -167,6 +168,23 @@
                       });
               }
           })
+
+          function toggleMedicFields(event) {
+              let especialidade = document.getElementById("especialidade").parentNode;
+              let crm = document.getElementById("crm").parentNode;
+              if (event.target.checked) {
+                  especialidade.style.display = "flex";
+                  crm.style.display = "flex";
+              }
+              else {
+                  especialidade.style.display = "none";
+                  crm.style.display = "none";
+              }
+          }
+
+          document.getElementById("medico").addEventListener("change", toggleMedicFields);
+
+          toggleMedicFields({ target: {checked: false }});
       });
     </script>
   </body>

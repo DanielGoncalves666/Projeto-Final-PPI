@@ -30,7 +30,8 @@
     <main>
       <div id="cadastro-form">
         <h2>Cadastrar Novo Paciente</h2>
-        <form action="cadastrar_paciente.php" method="post">
+        <form action="cadastro_sql.php" method="post">
+          <input type="hidden" name="tipo" value="paciente">
           <div>
             <label for="nome">Nome:</label>
             <input type="text" id="nome" name="nome" required class="longInput">
