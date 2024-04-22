@@ -22,10 +22,10 @@
         <main>
             <div id="cadastro-form">
                 <h2>Cadastrar Novo Endereço</h2>
-                <form action="cadastra_endereco.php" method="post">
+                <form>
                     <div>
                         <label for="cep">Cep:</label>
-                        <input type="text" id="cep" name="cep" pattern="\d{5}-\d{3}" required>
+                        <input type="text" id="cep" name="cep" required>
                     </div>
                     <div>
                         <label for="logradouro">Logradouro:</label>
@@ -68,7 +68,8 @@
                             <option value="TO">TO</option>
                         </select>
                     </div>
-    
+                    <span id="cadastroFailMsg"></span>
+
                     <button>Cadastrar</button>
                 </form>
             </div>
@@ -77,4 +78,54 @@
             <address>Av. João Naves de Ávila, 2121 - Santa Mônica, Uberlândia - MG, 38408-100.</address>
         </footer>
     </body>
+
+    <script>
+        async function cadastrar_endereco(form)
+        {
+            const falha = document.getElementById("cadastroFailMsg");
+            falha.style.color = "red";
+            falha.textContent = "";
+
+            var validacep = /^[0-9]{8}$/;
+            if (!validacep.test(form.cep.value))
+            {
+                falha.textContent = "Formato do Cep Inválido! O CEP deve conter apenas 8 (DíGITOS)."
+                
+                return;
+            }
+
+            const options = {method: "post", body: new FormData(form)};
+            try{
+                const resposta = await fetch("cadastra_endereco.php", options);
+                if(!resposta.ok) 
+                {
+                    falha.textContent = "Não foi possível alcançar o servidor!";
+                    throw new Error(response.statusText);
+                }
+                
+                const result = await resposta.json();
+    
+                if(result.success)
+                {
+                    falha.style.color = "green";
+                    falha.textContent = result.detail;
+                }
+                else
+                {
+                    falha.textContent = result.detail;
+                }
+            }
+            catch(e){
+                console.log("Erro: " + e)
+            }
+        }
+
+        window.onload = function () {
+            const form = document.querySelector("form");
+            form.onsubmit = function (e) {
+                cadastrar_endereco(form);
+                e.preventDefault();
+            };
+        };
+    </script>
 </html>

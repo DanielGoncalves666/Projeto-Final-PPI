@@ -54,6 +54,12 @@
     align-self: center;
 }
 
+#cadastroFailMsg{
+    font-size: 0.8rem;
+    text-align: center;
+    margin-bottom: 1vh;
+}
+
 @media (width > 500px){
     #cadastro-form{
         padding: 2vh 5vh;
