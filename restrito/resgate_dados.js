@@ -64,7 +64,7 @@ async function resgatarAgendamentos(){
 
 async function resgatarMeusAgendamentos(){
     try{
-        let response = await fetch("get_agendamentos.php?meu=sim");
+        let response = await fetch("get_agendamentos.php?meus=sim");
         if(!response.ok) throw new Error(response.statusText);
         let meusAgendamentos = await response.json();
 

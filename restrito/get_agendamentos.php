@@ -10,7 +10,7 @@ $pdo = mysqlConnect();
 
 $meusAgendamentos = $_GET["meus"] ?? ""; // qualquer coisa diferente de vazio indica que são os 
                                          // agendamentos do médico
-
+                          
 if($meusAgendamentos == "")
 {
     // todos os agendamentos
@@ -42,7 +42,8 @@ else
         $sql = <<<SQL
             SELECT dia, horario, nome, sexo, email
             FROM agenda INNER JOIN medico
-            ON agenda.codigoMedico = ?
+            ON agenda.codigoMedico = medico.codigo
+            WHERE medico.codigo = ?
             SQL;
 
         try
