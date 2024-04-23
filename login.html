@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt_BR">
+<html lang="pt-BR">
     <head>
         <title>Login</title>
 
@@ -46,53 +46,53 @@
         <footer>
             <address>Av. João Naves de Ávila, 2121 - Santa Mônica, Uberlândia - MG, 38408-100.</address>
         </footer>
+        <script>
+            async function tryLogin(form)
+            {
+                const loginError = document.getElementById("loginError");
+                loginError.textContent = "";
+                loginError.style.color = "red";
+
+                try{
+                    const options = {method:"post",
+                                    body: new FormData(form)};
+
+                    const response = await fetch("login.php", options);
+                    if(! response.ok)
+                    {
+                        throw new Error(response.statusText);
+                    }
+
+                    let result = await response.json();
+
+                    if(result.success)
+                    {
+                        loginError.style.color = "green";
+                        loginError.textContent = "Sucesso!";
+                        window.open(result.detail, "__blank");
+                    }
+                    else
+                    {
+                        loginError.textContent = "Dados Incorretos! Por favor tente novamente.";
+                        form.senha.value = "";
+                        form.senha.focus();
+                    }
+                }
+                catch(e)
+                {
+                    loginError.textContent = "Problemas de conexão com o servidor.";
+                    console.log("Erro: " + e);
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded",function (){
+                const form = document.forms.loginForm;
+                form.onsubmit = function (e){
+                    tryLogin(form);
+                    e.preventDefault();
+                };
+            });
+        </script>
     </body>
 
-    <script>
-        async function tryLogin(form)
-        {
-            const loginError = document.getElementById("loginError");
-            loginError.textContent = "";
-            loginError.style.color = "red";
-
-            try{
-                const options = {method:"post",
-                                 body: new FormData(form)};
-
-                const response = await fetch("login.php", options);
-                if(! response.ok)
-                {
-                    throw new Error(response.statusText);
-                }
-
-                let result = await response.json();
-
-                if(result.success)
-                {
-                    loginError.style.color = "green";
-                    loginError.textContent = "Sucesso!";
-                    window.open(result.detail, "__blank");
-                }
-                else
-                {
-                    loginError.textContent = "Dados Incorretos! Por favor tente novamente.";
-                    form.senha.value = "";
-                    form.senha.focus();
-                }
-            }
-            catch(e)
-            {
-                loginError.textContent = "Problemas de conexão com o servidor.";
-                console.log("Erro: " + e);
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded",function (){
-            const form = document.forms.loginForm;
-            form.onsubmit = function (e){
-                tryLogin(form);
-                e.preventDefault();
-            };
-        });
-    </script>
 </html>

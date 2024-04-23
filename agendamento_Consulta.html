@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt_BR">
+<html lang="pt-BR">
     <head>
         <title>Agendamento de Consulta</title>
 
@@ -32,7 +32,7 @@
                         <input type="email" id="email" name="email" required class="longInput">
                     </div>
                     <div>
-                        <label for="sexo">Sexo:</label>
+                        <label>Sexo:</label>
                         <div>
                             <input type="radio" id="masculino" name="sexo" value="Masculino" checked>
                             <label for="masculino">Masculino</label>
@@ -76,179 +76,179 @@
         <footer>
             <address>Av. João Naves de Ávila, 2121 - Santa Mônica, Uberlândia - MG, 38408-100.</address>
         </footer>
-    </body>
+        <script>
 
-    <script>
-        async function carregarEspecialidades(selectEspecialidade)
-        {
-            try{
-                let response = await fetch("get_especialidades.php");
-                if(! response.ok)
-                    throw new Error(response.statusText);
-
-                let result = await response.json();
-                for(let item of result)
-                {
-                    let novoOption = document.createElement("option");
-                    novoOption.value = item["especialidade"];
-                    novoOption.textContent = item["especialidade"];
-
-                    selectEspecialidade.appendChild(novoOption);
-                }
-            }
-            catch(e)
+            async function carregarEspecialidades(selectEspecialidade)
             {
-                console.log("Erro: " + e);
-            }
-        }
+                try{
+                    let response = await fetch("get_especialidades.php");
+                    if(! response.ok)
+                        throw new Error(response.statusText);
 
-        async function carregarMedicos(especialidade)
-        {
-            const selectMedico = document.getElementById("medico");
-            removerOptions(selectMedico);
-
-
-            try{
-                let response= await fetch(`get_medicos.php?especialidade=${especialidade}`);
-                if(! response.ok)
-                    throw new Error(response.statusText);
-
-                let result = await response.json();
-                for(let item of result)
-                {
-                    let novoOption = document.createElement("option");
-                    novoOption.value = item["nome"];
-                    novoOption.textContent = item["nome"];
-
-                    selectMedico.appendChild(novoOption);
-                }
-            }
-            catch(e)
-            {
-                console.log("Erro: " + e);
-            }
-        }
-
-        async function carregarHorarios(medico, data)
-        {
-            let todosHorarios = new Set([8,9,10,11,12,13,14,15,16,17]);
-
-            const selectHorario = document.getElementById("horario");
-            removerOptions(selectHorario);
-
-            if(medico == "" || data == "")
-                return; // requer que ambos os campos tenham valores selecionados
-
-            try
-            {
-                let response = await fetch(`get_horarios.php?nome=${medico}&data=${data}`);
-                if(! response.ok)
-                    throw new Error(response.statusText);
-                
-                let result = await response.json();
-
-                if( !(result[0] === -1)) // -1 indica que todos os horários estão disponíveis, logo não é necessário remover nenhum
-                {
+                    let result = await response.json();
                     for(let item of result)
-                        todosHorarios.delete(item);
+                    {
+                        let novoOption = document.createElement("option");
+                        novoOption.value = item["especialidade"];
+                        novoOption.textContent = item["especialidade"];
+
+                        selectEspecialidade.appendChild(novoOption);
+                    }
                 }
-
-                let array = [];
-                for(let item of todosHorarios.values())
-                    array.push(item);
-
-                array.sort(function(a, b){return a-b});
-
-                for(item of array)
+                catch(e)
                 {
-                    let novoOption = document.createElement("option");
-                    novoOption.value = item;
-                    novoOption.textContent = item + ":00";
+                    console.log("Erro: " + e);
+                }
+            }
 
-                    selectHorario.appendChild(novoOption);
+            async function carregarMedicos(especialidade)
+            {
+                const selectMedico = document.getElementById("medico");
+                removerOptions(selectMedico);
+
+
+                try{
+                    let response= await fetch(`get_medicos.php?especialidade=${especialidade}`);
+                    if(! response.ok)
+                        throw new Error(response.statusText);
+
+                    let result = await response.json();
+                    for(let item of result)
+                    {
+                        let novoOption = document.createElement("option");
+                        novoOption.value = item["nome"];
+                        novoOption.textContent = item["nome"];
+
+                        selectMedico.appendChild(novoOption);
+                    }
+                }
+                catch(e)
+                {
+                    console.log("Erro: " + e);
+                }
+            }
+
+            async function carregarHorarios(medico, data)
+            {
+                let todosHorarios = new Set([8,9,10,11,12,13,14,15,16,17]);
+
+                const selectHorario = document.getElementById("horario");
+                removerOptions(selectHorario);
+
+                if(medico == "" || data == "")
+                    return; // requer que ambos os campos tenham valores selecionados
+
+                try
+                {
+                    let response = await fetch(`get_horarios.php?nome=${medico}&data=${data}`);
+                    if(! response.ok)
+                        throw new Error(response.statusText);
+                    
+                    let result = await response.json();
+
+                    if( !(result[0] === -1)) // -1 indica que todos os horários estão disponíveis, logo não é necessário remover nenhum
+                    {
+                        for(let item of result)
+                            todosHorarios.delete(item);
+                    }
+
+                    let array = [];
+                    for(let item of todosHorarios.values())
+                        array.push(item);
+
+                    array.sort(function(a, b){return a-b});
+
+                    for(item of array)
+                    {
+                        let novoOption = document.createElement("option");
+                        novoOption.value = item;
+                        novoOption.textContent = item + ":00";
+
+                        selectHorario.appendChild(novoOption);
+                    }
+                    
+                }
+                catch(e)
+                {
+                    console.log("Erro: " + e);
+                }
+            }
+
+
+            async function agendarConsulta(form)
+            {
+                const falha = document.getElementById("cadastroFailMsg");
+                falha.style.color = "red";
+                falha.textContent = "";
+
+                const options = {method: "POST", body: new FormData(form)};
+
+                try{
+                    let response = await fetch("agendamento_Consulta.php", options);
+                    if(!response.ok) 
+                    {
+                        falha.textContent = "Não foi possível alcançar o servidor!";
+                        throw new Error(response.statusText);
+                    }
+
+                    let result = await response.json();
+
+                    if(result.success)
+                    {
+                        falha.style.color = "green";
+                        falha.textContent = result.detail;
+                    }
+                    else
+                    {
+                        falha.textContent = result.detail;
+                    }
+                }
+                catch(e)
+                {
+                    console.log("Erro: " + e)
+                }
+            }
+
+            function removerOptions(select)
+            {
+                let filhos = select.children
+                for(let i = filhos.length - 1; i > 0; i--)
+                {
+                    filhos[i].remove();
+                }
+            }
+
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const form = document.querySelector("form");
+                form.onsubmit = function (e) {
+                    agendarConsulta(e.target);
+                    e.preventDefault();
                 }
                 
-            }
-            catch(e)
-            {
-                console.log("Erro: " + e);
-            }
-        }
+                const selectEspecialidade = document.getElementById("especialidade");
+                carregarEspecialidades(selectEspecialidade);
 
+                selectEspecialidade.addEventListener("change", e => {
+                    carregarMedicos(e.target.value);
+                });
 
-        async function agendarConsulta(form)
-        {
-            const falha = document.getElementById("cadastroFailMsg");
-            falha.style.color = "red";
-            falha.textContent = "";
+                const selectMedico = document.getElementById("medico");
+                const selectData = document.getElementById("data");
+                selectMedico.addEventListener("change", e => {
+                    carregarHorarios(selectMedico.value, selectData.value);
+                });
 
-            const options = {method: "POST", body: new FormData(form)};
+                selectData.addEventListener("change", e => {
+                    carregarHorarios(selectMedico.value, selectData.value);
+                });
 
-            try{
-                let response = await fetch("agendamento_Consulta.php", options);
-                if(!response.ok) 
-                {
-                    falha.textContent = "Não foi possível alcançar o servidor!";
-                    throw new Error(response.statusText);
-                }
-
-                let result = await response.json();
-
-                if(result.success)
-                {
-                    falha.style.color = "green";
-                    falha.textContent = result.detail;
-                }
-                else
-                {
-                    falha.textContent = result.detail;
-                }
-            }
-            catch(e)
-            {
-                console.log("Erro: " + e)
-            }
-        }
-
-        function removerOptions(select)
-        {
-            let filhos = select.children
-            for(let i = filhos.length - 1; i > 0; i--)
-            {
-                filhos[i].remove();
-            }
-        }
-
-
-        document.addEventListener("DOMContentLoaded", function () {
-            const form = document.querySelector("form");
-            form.onsubmit = function (e) {
-                agendarConsulta(e.target);
-                e.preventDefault();
-            }
-            
-            const selectEspecialidade = document.getElementById("especialidade");
-            carregarEspecialidades(selectEspecialidade);
-
-            selectEspecialidade.addEventListener("change", e => {
-                carregarMedicos(e.target.value);
+                // o carregamento está condicionado a existir valores tanto em médico como em data, 
+                // não importando a ordem que tenham sido escolhidos.
+                
             });
 
-            const selectMedico = document.getElementById("medico");
-            const selectData = document.getElementById("data");
-            selectMedico.addEventListener("change", e => {
-                carregarHorarios(selectMedico.value, selectData.value);
-            });
 
-            selectData.addEventListener("change", e => {
-                carregarHorarios(selectMedico.value, selectData.value);
-            });
-
-            // o carregamento está condicionado a existir valores tanto em médico como em data, 
-            // não importando a ordem que tenham sido escolhidos.
-            
-        });
-
-
-    </script>
+        </script>
+    </body>
 </html>

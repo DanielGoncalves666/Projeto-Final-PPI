@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt_BR">
+<html lang="pt-BR">
     <head>
         <title>Novo Endereço</title>
 
@@ -77,55 +77,55 @@
         <footer>
             <address>Av. João Naves de Ávila, 2121 - Santa Mônica, Uberlândia - MG, 38408-100.</address>
         </footer>
+        <script>
+            async function cadastrar_endereco(form)
+            {
+                const falha = document.getElementById("cadastroFailMsg");
+                falha.style.color = "red";
+                falha.textContent = "";
+                
+                var validacep = /^\d{5}-?\d{3}$/;
+                if (!validacep.test(form.cep.value))
+                {
+                    falha.textContent = "Formato do Cep Inválido! O CEP deve ter o padrão XXXXX-XXX."
+                    
+                    return;
+                }
+
+                const options = {method: "post", body: new FormData(form)};
+                try{
+                    let resposta = await fetch("cadastra_endereco.php", options);
+                    if(!resposta.ok) 
+                    {
+                        falha.textContent = "Não foi possível alcançar o servidor!";
+                        throw new Error(response.statusText);
+                    }
+                    
+                    let result = await resposta.json();
+        
+                    if(result.success)
+                    {
+                        falha.style.color = "green";
+                        falha.textContent = result.detail;
+                    }
+                    else
+                    {
+                        falha.textContent = result.detail;
+                    }
+                }
+                catch(e){
+                    console.log("Erro: " + e)
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const form = document.querySelector("form");
+                form.onsubmit = function (e) {
+                    cadastrar_endereco(form);
+                    e.preventDefault();
+                };
+            });
+        </script>
     </body>
 
-    <script>
-        async function cadastrar_endereco(form)
-        {
-            const falha = document.getElementById("cadastroFailMsg");
-            falha.style.color = "red";
-            falha.textContent = "";
-            
-            var validacep = /^\d{5}-?\d{3}$/;
-            if (!validacep.test(form.cep.value))
-            {
-                falha.textContent = "Formato do Cep Inválido! O CEP deve ter o padrão XXXXX-XXX."
-                
-                return;
-            }
-
-            const options = {method: "post", body: new FormData(form)};
-            try{
-                let resposta = await fetch("cadastra_endereco.php", options);
-                if(!resposta.ok) 
-                {
-                    falha.textContent = "Não foi possível alcançar o servidor!";
-                    throw new Error(response.statusText);
-                }
-                
-                let result = await resposta.json();
-    
-                if(result.success)
-                {
-                    falha.style.color = "green";
-                    falha.textContent = result.detail;
-                }
-                else
-                {
-                    falha.textContent = result.detail;
-                }
-            }
-            catch(e){
-                console.log("Erro: " + e)
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            const form = document.querySelector("form");
-            form.onsubmit = function (e) {
-                cadastrar_endereco(form);
-                e.preventDefault();
-            };
-        });
-    </script>
 </html>
