@@ -85,25 +85,25 @@
             const falha = document.getElementById("cadastroFailMsg");
             falha.style.color = "red";
             falha.textContent = "";
-
-            var validacep = /^[0-9]{8}$/;
+            
+            var validacep = /^\d{5}-?\d{3}$/;
             if (!validacep.test(form.cep.value))
             {
-                falha.textContent = "Formato do Cep Inválido! O CEP deve conter apenas 8 (DíGITOS)."
+                falha.textContent = "Formato do Cep Inválido! O CEP deve ter o padrão XXXXX-XXX."
                 
                 return;
             }
 
             const options = {method: "post", body: new FormData(form)};
             try{
-                const resposta = await fetch("cadastra_endereco.php", options);
+                let resposta = await fetch("cadastra_endereco.php", options);
                 if(!resposta.ok) 
                 {
                     falha.textContent = "Não foi possível alcançar o servidor!";
                     throw new Error(response.statusText);
                 }
                 
-                const result = await resposta.json();
+                let result = await resposta.json();
     
                 if(result.success)
                 {
@@ -120,12 +120,12 @@
             }
         }
 
-        window.onload = function () {
+        document.addEventListener("DOMContentLoaded", function () {
             const form = document.querySelector("form");
             form.onsubmit = function (e) {
                 cadastrar_endereco(form);
                 e.preventDefault();
             };
-        };
+        });
     </script>
 </html>

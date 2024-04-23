@@ -84,12 +84,12 @@
             }
         }
 
-        window.onload = function (){
+        document.addEventListener("DOMContentLoaded",function (){
             const form = document.forms.loginForm;
             form.onsubmit = function (e){
                 tryLogin(form);
                 e.preventDefault();
             };
-        };
+        });
     </script>
 </html>

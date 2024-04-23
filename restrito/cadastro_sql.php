@@ -1,6 +1,11 @@
 <?php
 
 require "../conexaoMySQL.php";
+require "session_verification.php";  
+
+session_start();
+exitWhenNotLoggedIn();
+
 $pdo = mysqlConnect();
 
 $tipo = $_POST['tipo'];

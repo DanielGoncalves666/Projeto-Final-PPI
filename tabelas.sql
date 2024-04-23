@@ -5,7 +5,7 @@ CREATE TABLE pessoa
    sexo varchar(10),
    email varchar(50),
    telefone varchar(15),
-   cep char(8),
+   cep char(10),
    logradouro varchar(100),
    cidade varchar(40),
    estado varchar(20)
@@ -43,9 +43,9 @@ CREATE TABLE paciente
 
 CREATE TABLE agenda
 (
-   codigo int PRIMARY KEY,
+   codigo int PRIMARY KEY auto_increment,
    dia date,
-   horario time,
+   horario int,
    nome varchar(100),
    sexo varchar(10),
    email varchar(50),
@@ -56,18 +56,18 @@ CREATE TABLE agenda
 
 CREATE TABLE base_enderecos
 (
-   cep char(8),
+   cep char(10),
    logradouro varchar(100),
    cidade varchar(40),
    estado varchar(20)
 )ENGINE=InnoDB;
 
 
-INSERT INTO base_enderecos VALUES ("38400100", "Avenida Floriano Peixoto","Uberlândia","MG");
-INSERT INTO base_enderecos VALUES ("38408100", "Avenida João Naves de Ávila","Uberlândia","MG");
-INSERT INTO base_enderecos VALUES ("38402018", "Rua Ceará","Uberlândia","MG");
-INSERT INTO base_enderecos VALUES ("38701002", "Rua Padre Pavoni","Patos de Minas","MG");
-INSERT INTO base_enderecos VALUES ("38747792", "Avenida Liria Terezinha Lassi Capuano","Patrocínio","MG");
+INSERT INTO base_enderecos VALUES ("38400-100", "Avenida Floriano Peixoto","Uberlândia","MG");
+INSERT INTO base_enderecos VALUES ("38408-100", "Avenida João Naves de Ávila","Uberlândia","MG");
+INSERT INTO base_enderecos VALUES ("38402-018", "Rua Ceará","Uberlândia","MG");
+INSERT INTO base_enderecos VALUES ("38701-002", "Rua Padre Pavoni","Patos de Minas","MG");
+INSERT INTO base_enderecos VALUES ("38747-792", "Avenida Liria Terezinha Lassi Capuano","Patrocínio","MG");
 
 
 /*
@@ -77,7 +77,7 @@ auto_increment foi reiniciado:
 */
 INSERT INTO pessoa (nome,sexo,email,telefone,cep,logradouro,cidade,estado) 
             VALUES ("Teste Testador", "Masculino", "testador@email.com", "(34)99999-9999",
-                     "38408100", "Avenida João Naves de Ávila","Uberlândia","MG");
+                     "38408-100", "Avenida João Naves de Ávila","Uberlândia","MG");
 
 /*
 A senha correspondente ao hash colocado abaixo é 123456
