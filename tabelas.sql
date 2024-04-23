@@ -11,10 +11,6 @@ CREATE TABLE pessoa
    estado varchar(20)
 )ENGINE=InnoDB;
 
-/*
-   Talvez seja bom colocar email como UNIQUE
-*/
-
 CREATE TABLE funcionario
 (
    dataContrato date,
@@ -71,17 +67,17 @@ INSERT INTO base_enderecos VALUES ("38747-792", "Avenida Liria Terezinha Lassi C
 
 
 /*
-A inserção na tabela funcionario com código 1 funciona se a tabela 'pessoa' acabou de ser criada ou o
-auto_increment foi reiniciado:
+Para reiniciar o AUTO_INCREMENT
    ALTER TABLE pessoa AUTO_INCREMENT = 1;
 */
-INSERT INTO pessoa (nome,sexo,email,telefone,cep,logradouro,cidade,estado) 
-            VALUES ("Teste Testador", "Masculino", "testador@email.com", "(34)99999-9999",
-                     "38408-100", "Avenida João Naves de Ávila","Uberlândia","MG");
-
 /*
 A senha correspondente ao hash colocado abaixo é 123456
 */
-INSERT INTO funcionario (dataContrato,salario,senhaHash,codigo)
-                  VALUES("2024-04-15",2000.50,"$2y$10$kKfH4/DHbLCKmqfjq2MDlutzdGMHSiYmnESXSkjapOt9HGUt6tFNu",1);
+INSERT INTO pessoa (nome,sexo,email,telefone,cep,logradouro,cidade,estado) 
+VALUES ("Teste Testador", "Masculino", "testador@email.com", "(34)99999-9999", "38408-100", "Avenida João Naves de Ávila","Uberlândia","MG");
 
+INSERT INTO funcionario (dataContrato,salario,senhaHash,codigo)
+VALUES("2024-04-15",2000.50,"$2y$10$kKfH4/DHbLCKmqfjq2MDlutzdGMHSiYmnESXSkjapOt9HGUt6tFNu",LAST_INSERT_ID());
+
+INSERT INTO medico (especialidade, crm, codigo)
+VALUES ("Oftalmologista", "CRM/SP 123355", LAST_INSERT_ID());

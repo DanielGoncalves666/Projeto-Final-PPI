@@ -83,15 +83,15 @@
         {
             try{
                 let response = await fetch("get_especialidades.php");
-                if(! respone.ok)
+                if(! response.ok)
                     throw new Error(response.statusText);
 
                 let result = await response.json();
                 for(let item of result)
                 {
                     let novoOption = document.createElement("option");
-                    novoOption.value = item.especialidade;
-                    novoOption.textContent = item.especialidade;
+                    novoOption.value = item["especialidade"];
+                    novoOption.textContent = item["especialidade"];
 
                     selectEspecialidade.appendChild(novoOption);
                 }
@@ -105,23 +105,22 @@
         async function carregarMedicos(especialidade)
         {
             const selectMedico = document.getElementById("medico");
-            let optionVazio = document.createElement("option");
-            optionVazio.value = "";
-            selectMedico.innerHTML = optionVazio;
+            removerOptions(selectMedico);
+
 
             try{
-                let respone = await fetch(`get_medicos.php?especialidade=${especialidade}`);
-                if(! respone.ok)
+                let response= await fetch(`get_medicos.php?especialidade=${especialidade}`);
+                if(! response.ok)
                     throw new Error(response.statusText);
 
                 let result = await response.json();
                 for(let item of result)
                 {
                     let novoOption = document.createElement("option");
-                    novoOption.value = item.nome;
-                    novoOption.textContent = item.nome;
+                    novoOption.value = item["nome"];
+                    novoOption.textContent = item["nome"];
 
-                    selectEspecialidade.appendChild(novoOption);
+                    selectMedico.appendChild(novoOption);
                 }
             }
             catch(e)
@@ -132,12 +131,10 @@
 
         async function carregarHorarios(medico, data)
         {
-            let todosHorarios = new Set(8,9,10,11,12,13,14,15,16,17);
+            let todosHorarios = new Set([8,9,10,11,12,13,14,15,16,17]);
 
             const selectHorario = document.getElementById("horario");
-            let optionVazio = document.createElement("option");
-            optionVazio.value = "";
-            selectHorario.innerHTML = optionVazio;
+            removerOptions(selectHorario);
 
             if(medico == "" || data == "")
                 return; // requer que ambos os campos tenham valores selecionados
@@ -148,13 +145,13 @@
                 if(! response.ok)
                     throw new Error(response.statusText);
                 
-                let result = response.json();
+                let result = await response.json();
 
-                if(result[0] == -1)
-                    return;// sem horários na data
-
-                for(let item of result)
-                    todosHorarios.delete(item);
+                if( !(result[0] === -1)) // -1 indica que todos os horários estão disponíveis, logo não é necessário remover nenhum
+                {
+                    for(let item of result)
+                        todosHorarios.delete(item);
+                }
 
                 let array = [];
                 for(let item of todosHorarios.values())
@@ -165,8 +162,8 @@
                 for(item of array)
                 {
                     let novoOption = document.createElement("option");
-                    novoOption.value = item.nome;
-                    novoOption.textContent = item.nome + ":00";
+                    novoOption.value = item;
+                    novoOption.textContent = item + ":00";
 
                     selectHorario.appendChild(novoOption);
                 }
@@ -189,7 +186,7 @@
 
             try{
                 let response = await fetch("agendamento_Consulta.php", options);
-                if(!resposta.ok) 
+                if(!response.ok) 
                 {
                     falha.textContent = "Não foi possível alcançar o servidor!";
                     throw new Error(response.statusText);
@@ -210,6 +207,15 @@
             catch(e)
             {
                 console.log("Erro: " + e)
+            }
+        }
+
+        function removerOptions(select)
+        {
+            let filhos = select.children
+            for(let i = filhos.length - 1; i > 0; i--)
+            {
+                filhos[i].remove();
             }
         }
 

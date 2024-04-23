@@ -118,14 +118,14 @@ function addEntradaAgendamento(agendamento){
     novaEntrada.classList.add("entrada-listagem");
 
     let data_hora_nome = document.createElement("b");
-    data_hora_nome.textContent = `${agendamento['medNome']} - ${agendamento['dia']} às ${agendamento['horario']}:00`;
+    data_hora_nome.textContent = `Dr. ${agendamento['medNome']} - ${agendamento['dia']} às ${agendamento['horario']}:00`;
 
     novaEntrada.appendChild(data_hora_nome);
 
     let grupoDiv = document.createElement("div");
     grupoDiv.classList.add('entrada-listagem-grupo');
 
-    for (dadoKey in ['nome','sexo','email']) {
+    for (dadoKey of ['nome','sexo','email']) {
         let p = document.createElement("p");
         p.textContent = `${dadoKey}: ` + agendamento[dadoKey];
         grupoDiv.appendChild(p);
@@ -136,9 +136,10 @@ function addEntradaAgendamento(agendamento){
     grupoDiv = document.createElement("div");
     grupoDiv.classList.add('entrada-listagem-grupo');
 
-    for (dadoKey in ['medNome','medEspec']) {
+    let campos = [['Médico: Dr.', 'Especialidade: '],['medNome','medEspec']]
+    for (let i = 0; i < 2; i++) {
         let p = document.createElement("p");
-        p.textContent = `${dadoKey}: ` + agendamento[dadoKey];
+        p.textContent = `${campos[0][i]}` + agendamento[campos[1][i]];
         grupoDiv.appendChild(p);
     }
 
@@ -160,7 +161,7 @@ function addEntradaMeuAgendamento(agendamento){
     let grupoDiv = document.createElement("div");
     grupoDiv.classList.add('entrada-listagem-grupo');
 
-    for (dadoKey in ['nome','sexo','email']) {
+    for (dadoKey of ['nome','sexo','email']) {
         let p = document.createElement("p");
         p.textContent = `${dadoKey}: ` + agendamento[dadoKey];
         grupoDiv.appendChild(p);

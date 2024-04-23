@@ -3,18 +3,17 @@
 
     $pdo = mySQLConnect();
 
-    $nomeMedico = $_GET("nome");
-    $data = $_GET("data");
+    $nomeMedico = $_GET["nome"] ?? "";
+    $data = $_GET["data"] ?? "";
+
+    if($nomeMedico == "" || $data == "")
+        exit("Nome do médico ou data vazios.");
 
     $sql = <<<SQL
-        SELECT horario
-        FROM agenda INNER JOIN ( SELECT medico.codigo as medCod
-                                FROM medico INNER JOIN pessoa
-                                ON medico.codigo = pessoa.codigo
-                                WHERE pessoa.nome = ?
-                                )
-        ON agenda.codigoMedico = medCod
-        WHERE dia = ?
+        SELECT agenda.horario
+        FROM agenda INNER JOIN medico ON agenda.codigoMedico = medico.codigo
+                    INNER JOIN pessoa ON medico.codigo = pessoa.codigo
+        WHERE pessoa.nome = ? AND agenda.dia = ?
         SQL;
 
     $resposta = [];
@@ -22,21 +21,23 @@
     {
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$nomeMedico, $data]);
-
-        $response = fetchAll(PDO::FETCH_OBJ);
-
-        foreach ($item as $response)
-            $resposta[] = $item->horario;
-
+       
+        $response = $stmt->fetchAll(PDO::FETCH_OBJ);
+        
         if(! $response)
             $resposta[] = -1;
+        else{
+            foreach ($response as $item)
+                $resposta[] = $item->horario;
+        }
+
     }
     catch(Exception $e)
     {
-        exit("Falha Inesperada: " . $e->get_message());
+        exit("Falha Inesperada: " . $e->getMessage());
     }
 
-
-    header('Content-type: application/json');
-    echo json_encode($response);
+    header('Access-Control-Allow-Origin: *');
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode($resposta);
 ?>

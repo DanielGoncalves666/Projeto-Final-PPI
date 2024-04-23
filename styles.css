@@ -160,3 +160,10 @@ footer{
         padding: 2vh 8vw;
     }
 }
+
+@media (max-width: 320px){
+    footer{
+        margin-left: 1vw;
+        margin-right: 1vw;
+    }
+}

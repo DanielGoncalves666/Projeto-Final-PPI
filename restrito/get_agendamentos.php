@@ -16,23 +16,19 @@ if($meusAgendamentos == "")
     // todos os agendamentos
 
     $sql = <<<SQL
-        SELECT (dia, horario, nome, sexo, email, medNome, medEspec)
-        FROM agenda INNER JOIN (SELECT (pessoa.nome as medNome, medico.especialidade as medEspec, medico.codigo as medCodigo)
-                                FROM medico INNER JOIN pessoa
-                                ON medico.codigo = pessoa.codigo)
-        ON agenda.codigoMedico = medCodigo
+        SELECT agenda.dia, agenda.horario, agenda.nome, agenda.sexo, agenda.email, medico.especialidade as medEspec, pessoa.nome as medNome
+        FROM agenda INNER JOIN medico ON agenda.codigoMedico = medico.codigo
+                    INNER JOIN pessoa ON medico.codigo = pessoa.codigo;
         SQL;
-
+    
     try{
         $stmt = $pdo->query($sql);
-
-        $agendamentos = $stmt->fetchAll();
+        $agendamentos = $stmt->fetchAll(PDO::FETCH_OBJ);
     }
     catch(Exception $e)
     {
-        exit("Erro: " . $e.get_message());
+        exit("Erro: " . $e->get_message());
     }
-
 }
 else
 {
@@ -44,7 +40,7 @@ else
         $codigo = $_SESSION['codigo'];
     
         $sql = <<<SQL
-            SELECT (dia, horario, nome, sexo, email)
+            SELECT dia, horario, nome, sexo, email
             FROM agenda INNER JOIN medico
             ON agenda.codigoMedico = ?
             SQL;
@@ -58,7 +54,7 @@ else
         }
         catch(Exception $e)
         {
-            exit("Erro: " . $e.get_message());
+            exit("Erro: " . $e->getMessage());
         }
 
     }
@@ -68,7 +64,8 @@ else
     }
 }
 
-header('Content-type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json; charset=utf-8');
 echo json_encode($agendamentos);
 
 ?>

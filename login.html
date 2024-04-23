@@ -52,6 +52,8 @@
         async function tryLogin(form)
         {
             const loginError = document.getElementById("loginError");
+            loginError.textContent = "";
+            loginError.style.color = "red";
 
             try{
                 const options = {method:"post",
@@ -67,7 +69,8 @@
 
                 if(result.success)
                 {
-                    loginError.textContent = "";
+                    loginError.style.color = "green";
+                    loginError.textContent = "Sucesso!";
                     window.open(result.detail, "__blank");
                 }
                 else

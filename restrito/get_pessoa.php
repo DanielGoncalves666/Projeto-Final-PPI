@@ -36,6 +36,7 @@ try {
     $stmt = $pdo->query($sql);
     $pessoas = $stmt->fetchAll(PDO::FETCH_OBJ);
 
+    header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json; charset=utf-8');
     echo json_encode($pessoas);
 }

@@ -29,9 +29,8 @@
     else
     {
         $sql = <<<SQL
-            SELECT codigo
-            FROM medico INNER JOIN pessoa
-            ON medico.codigo = pessoa.codigo
+            SELECT medico.codigo
+            FROM medico INNER JOIN pessoa ON medico.codigo = pessoa.codigo
             WHERE nome = ?
             SQL;
 
@@ -43,27 +42,28 @@
         try{
             $stmt1 = $pdo->prepare($sql);
             $stmt1->execute([$medico]);
+            
+            $codigoMedico = $stmt1->fetchColumn();
 
-            $codigoMedico = $fetchColumn();
-
-            if(!$col)
+            if(!$codigoMedico)
             {
                 $response = new RequestResponse(false, "Nenhum médico com esse nome");
             }
             else
             {
                 $stmt2 = $pdo->prepare($sql2);
-                $stmt2->execute([$dia, $horario, $nome, $sexo, $email, $col]);
+                $stmt2->execute([$data, $horario, $nome, $sexo, $email, $codigoMedico]);
 
                 $response = new RequestResponse(true, "Agendamento concluído!");
             }
         }
         catch(Exception $e)
         {
-            $response = new RequestResponse(false, "Falha no banco de dados: " . $e->get_message());
+            $response = new RequestResponse(false, "Falha no banco de dados: " . $e->getMessage());
         }
     }
 
-    header('Content-type: application/json');
+    header('Access-Control-Allow-Origin: *');
+    header('Content-Type: application/json; charset=utf-8');
     echo json_encode($response);
 ?>
