@@ -47,3 +47,31 @@ async function resgatarPacientes() {
         console.error(e);
     }
 }
+
+async function resgatarAgendamentos(){
+    try{
+        let response = await fetch("get_agendamentos.php");
+        if(!response.ok) throw new Error(response.statusText);
+        let agendamentos = await response.json();
+
+        return agendamentos;
+    }
+    catch (e)
+    {
+        console.error(e);
+    }
+}
+
+async function resgatarMeusAgendamentos(){
+    try{
+        let response = await fetch("get_agendamentos.php?meu=sim");
+        if(!response.ok) throw new Error(response.statusText);
+        let meusAgendamentos = await response.json();
+
+        return meusAgendamentos;
+    }
+    catch(e)
+    {
+        console.error(e);
+    }
+}

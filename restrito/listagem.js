@@ -112,6 +112,65 @@ function addEntradaEndereco(endereco) {
     container_entradas.appendChild(novaEntrada);
 }
 
+function addEntradaAgendamento(agendamento){
+    let container_entradas = document.getElementById("entradas-listagem-container");
+    let novaEntrada = document.createElement("div");
+    novaEntrada.classList.add("entrada-listagem");
+
+    let data_hora_nome = document.createElement("b");
+    data_hora_nome.textContent = `${agendamento['medNome']} - ${agendamento['dia']} às ${agendamento['horario']}:00`;
+
+    novaEntrada.appendChild(data_hora_nome);
+
+    let grupoDiv = document.createElement("div");
+    grupoDiv.classList.add('entrada-listagem-grupo');
+
+    for (dadoKey in ['nome','sexo','email']) {
+        let p = document.createElement("p");
+        p.textContent = `${dadoKey}: ` + agendamento[dadoKey];
+        grupoDiv.appendChild(p);
+    }
+
+    novaEntrada.appendChild(grupoDiv);
+
+    grupoDiv = document.createElement("div");
+    grupoDiv.classList.add('entrada-listagem-grupo');
+
+    for (dadoKey in ['medNome','medEspec']) {
+        let p = document.createElement("p");
+        p.textContent = `${dadoKey}: ` + agendamento[dadoKey];
+        grupoDiv.appendChild(p);
+    }
+
+    novaEntrada.appendChild(grupoDiv);
+
+    container_entradas.appendChild(novaEntrada);
+}
+
+function addEntradaMeuAgendamento(agendamento){
+    let container_entradas = document.getElementById("entradas-listagem-container");
+    let novaEntrada = document.createElement("div");
+    novaEntrada.classList.add("entrada-listagem");
+
+    let data_hora_nome = document.createElement("b");
+    data_hora_nome.textContent = `${agendamento['nome']} - ${agendamento['dia']} às ${agendamento['horario']}:00`;
+
+    novaEntrada.appendChild(data_hora_nome);
+
+    let grupoDiv = document.createElement("div");
+    grupoDiv.classList.add('entrada-listagem-grupo');
+
+    for (dadoKey in ['nome','sexo','email']) {
+        let p = document.createElement("p");
+        p.textContent = `${dadoKey}: ` + agendamento[dadoKey];
+        grupoDiv.appendChild(p);
+    }
+
+    novaEntrada.appendChild(grupoDiv);
+
+    container_entradas.appendChild(novaEntrada);
+}
+
 ////////////////////////////////////////
 // Funções para colocar dados no DOM  //
 ////////////////////////////////////////
@@ -137,8 +196,14 @@ function displayFilter(index) {
             .catch(e => console.error(e));
         break;
     case 3:
+        resgatarAgendamentos()
+            .then(agendamentos => agendamentos.forEach(addEntradaAgendamento))
+            .catch(e => console.error(e));
         break;
     case 4:
+        resgatarMeusAgendamentos()
+            .then(myAgenda => myAgenda.forEach(addEntradaMeuAgendamento))
+            .catch(e => console.error(e));
         break;
     }
 }
