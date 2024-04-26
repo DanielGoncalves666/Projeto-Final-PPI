@@ -1,10 +1,10 @@
 <?php
 function mySQLConnect()
 {
-    $db_host = "sql206.infinityfree.com";
-    $db_username = "if0_36114516";
-    $db_password = "r64nzvAnD5";
-    $db_name = "if0_36114516_medcomp";
+    $db_host = "";
+    $db_username = "";
+    $db_password = "";
+    $db_name = "";
 
     $dsn = "mysql:host=$db_host;dbname=$db_name;charset=utf8mb4";
 
